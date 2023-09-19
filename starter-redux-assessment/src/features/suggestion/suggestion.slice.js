@@ -4,8 +4,10 @@ export const fetchSuggestion =
   createAsyncThunk(/* Task 15: Complete the `createAsyncThunk()` function to load a suggestion from this URL: http://localhost:3004/api/suggestion */
     'suggestion',
     async (thunkAPI) => {
-      const response = await fetch("http://localhost:3004/api/suggestion");
-      return response.data;
+      const response = fetch("http://localhost:3004/api/suggestion")
+        .then(res => res.json())
+        .catch(err => thunkAPI.rejectWithValue(err))
+      return response;
     }
   );
 

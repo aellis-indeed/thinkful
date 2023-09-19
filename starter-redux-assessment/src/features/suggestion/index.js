@@ -29,12 +29,10 @@ export default function Suggestion() {
   if (loading) {
     render = <h3>Loading...</h3>;
   } else if (error) {
-    console.log(error);
     render = <h3>Sorry, we're having trouble loading the suggestion.</h3>;
   } else {
-    console.log(suggestion);
-    const caption = suggestion.caption;
-    const imageUrl = suggestion.imageUrl;
+    const caption = suggestion.data.caption;
+    const imageUrl = suggestion.data.imageUrl;
     // Task 21: Enable the two JSX lines below needed to display the suggestion on the page
     render = (
       <>

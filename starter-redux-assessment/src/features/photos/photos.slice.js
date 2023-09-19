@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { useSelector } from 'react-redux';
+// import { useSelector } from 'react-redux';
 import { selectSearchTerm } from '../search/search.slice';
 import photos from './photos.data.js';
 
@@ -44,6 +44,6 @@ export const selectFilteredPhotos = (state) => {
   // Task 12: Complete `selectFilteredPhotos()` selector to return a filtered list of photos whose captions match the user's search term
   const search = selectSearchTerm(state);
   const regex = new RegExp(search, "i");
-  if (search !== '') { console.log(search, state.photos.photos.filter(({caption}) => caption.match(regex))) }
+  // if (search !== '') { console.log(search, state.photos.photos.filter(({caption}) => caption.match(regex))) }
   return state.photos.photos.filter(({caption}) => caption.match(regex));
 };
