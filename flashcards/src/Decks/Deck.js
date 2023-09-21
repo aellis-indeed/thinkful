@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useHistory, useRouteMatch } from "react-router-dom";
-import Button from 'react-bootstrap/Button';
-import Card from 'react-bootstrap/Card';
 
 import { deleteDeck } from "../utils/api";
 
@@ -29,23 +27,23 @@ function Deck({deck, handleDecksChanged}) {
   let secondaryButton;
 
   if (url.includes("decks")) {
-    secondaryButton = (<Button onClick={() => history.push(`/decks/${deck.id}/edit`) } variant="secondary">Edit</Button>)
+    secondaryButton = (<button onClick={() => history.push(`/decks/${deck.id}/edit`) } class="btn btn-secondary">Edit</button>)
   } else {
-    secondaryButton = (<Button onClick={() => history.push(`/decks/${deck.id}`) } variant="secondary">View</Button>)
+    secondaryButton = (<button onClick={() => history.push(`/decks/${deck.id}`) } class="btn btn-secondary">View</button>)
   }
 
   return (
-      <Card>
-        <Card.Body>
-          <Card.Title>{deck.name}</Card.Title>
-          <Card.Subtitle className="mb-2 text-muted float-right">{(deck.cards) ? deck.cards.length : 0} cards</Card.Subtitle>
-          <Card.Text>{deck.description}</Card.Text>
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">{deck.name}</h5>
+          <h6 class="card-subtitle mb-2 text-muted float-right">{(deck.cards) ? deck.cards.length : 0} cards</h6>
+          <p class="card-text">{deck.description}</p>
           {secondaryButton}
-          <Button onClick={() => history.push(`/decks/${deck.id}/study`) } variant="primary">Study</Button>
-          {url.includes("decks") ? (<Button onClick={() => history.push(`${url}/cards/new`) } variant="primary">Add Cards</Button>) :<></> }
-          <Button onClick={handleDelete} variant="danger" className={"float-right"}>Delete</Button>
-        </Card.Body>
-      </Card>
+          <button onClick={() => history.push(`/decks/${deck.id}/study`) } class="btn btn-primary">Study</button>
+          {url.includes("decks") ? (<button onClick={() => history.push(`${url}/cards/new`) } class="btn btn-primary">Add Cards</button>) :<></> }
+          <button onClick={handleDelete} class="btn btn-danger float-right">Delete</button>
+        </div>
+      </div>
   );
 }
 

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { Breadcrumb } from "react-bootstrap";
 
 let initialCrumbTracker = {
     home: {
@@ -129,17 +128,18 @@ function Bread({decks}) {
         }
     }, [decks, location]);
 
-    const homeCrumb = (<Breadcrumb.Item href="/" active={crumbTracker.home.active}>Home</Breadcrumb.Item>);
-    const studyCrumb = (<Breadcrumb.Item active>Study</Breadcrumb.Item>);
-    const createDeckCrumb = (<Breadcrumb.Item active>Create Deck</Breadcrumb.Item>);
-    const deckCrumb = (<Breadcrumb.Item href={`/decks/${crumbTracker.deck.id}`} active={crumbTracker.deck.active}>{deckName}</Breadcrumb.Item>);
-    const editDeckCrumb = (<Breadcrumb.Item active>Edit</Breadcrumb.Item>);
-    const addCardCrumb = (<Breadcrumb.Item active>Add Card</Breadcrumb.Item>);
-    const editCardCrumb = (<Breadcrumb.Item active>Edit Card</Breadcrumb.Item>);
+    const homeCrumb = (<li class="breadcrumb-item">{(!crumbTracker.home.active) ? (<a href="/">Home</a>) : "Home"}</li>);
+    const studyCrumb = (<li class="breadcrumb-item">Study</li>);
+    const createDeckCrumb = (<li class="breadcrumb-item">Create Deck</li>);
+    const deckCrumb = (<li class="breadcrumb-item">{(!crumbTracker.deck.active) ? (<a href={`/decks/${crumbTracker.deck.id}`}>{deckName}</a>) : deckName}</li>);
+    const editDeckCrumb = (<li class="breadcrumb-item">Edit</li>);
+    const addCardCrumb = (<li class="breadcrumb-item" active>Add Card</li>);
+    const editCardCrumb = (<li class="breadcrumb">Edit Card</li>);
 
 
     return (
-        <Breadcrumb>
+        <nav>
+          <ol class="breadcrumb">
             {(crumbTracker.home.valid) ? homeCrumb : <></>}
             {(crumbTracker.deck.valid) ? deckCrumb : <></>}
             {(crumbTracker.study.valid) ? studyCrumb : <></>}
@@ -147,7 +147,8 @@ function Bread({decks}) {
             {(crumbTracker.editDeck.valid) ? editDeckCrumb : <></>}
             {(crumbTracker.addCard.valid) ? addCardCrumb : <></>}
             {(crumbTracker.editCard.valid) ? editCardCrumb : <></>}
-        </Breadcrumb>
+          </ol>
+        </nav>
     );
 }
 

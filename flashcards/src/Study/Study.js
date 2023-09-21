@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useHistory, useRouteMatch } from "react-router-dom";
 import StudyCard from "./StudyCard";
-import { Button } from "react-bootstrap";
 
 import { readDeck } from "../utils/api";
 
@@ -41,17 +40,17 @@ function Study() {
   if (deck.cards.length < 3) {
     return (
       <>
-        <h1>Study: {deck.name}</h1>
+        <h1>{deck.name}</h1>
         <h2>Not enough cards.</h2>  
         <p>You need at least 3 cards to study. There are {deck.cards.length} cards in this deck.</p>
-        <Button onClick={() => history.push(`/decks/${deck.id}/cards/new`)}>Add Cards</Button>
+        <button class="btn btn-primary" onClick={() => history.push(`/decks/${deck.id}/cards/new`)}>Add Cards</button>
       </>
     );
   }
 
   return (
     <>
-      <h1>Study: {deck.name}</h1>
+      <h1>{deck.name}</h1>
       <StudyCard card={card} index={index} length={deck.cards.length} handleNextCard={handleNextCard}/>
     </>
   );

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { Form, Button } from "react-bootstrap";
 import { useRouteMatch, useHistory } from "react-router-dom";
 import { createDeck, readDeck, updateDeck } from "../utils/api";
 
@@ -13,6 +12,7 @@ function UpsertDeck() {
     if (url.includes("edit")) {
         id = url.replace("/decks/", "").replace("/edit", "");
     }
+    // eslint-disable-next-line
     const [deckId, setDeckId] = useState(id);
 
     let intialFormData = {
@@ -20,14 +20,15 @@ function UpsertDeck() {
         description: ""
     };
 
-    useEffect(async () => {
+    useEffect(() => {
         if (deckId !== -1) {
-            await readDeck(id)
+            readDeck(id)
                 .then((res) => {
                     const data = {
                         name: res.name,
                         description: res.description
                     };
+                    // eslint-disable-next-line
                     intialFormData = data;
                     setFormData(data);
                 });
@@ -61,20 +62,20 @@ function UpsertDeck() {
     return (
         <>
             <h1>{title}</h1>
-            <Form>
-                <Form.Group>
-                    <Form.Label>Name</Form.Label>
-                    <Form.Control value={formData.name} onChange={handleChange} name="name" type="name" placeholder="Deck Name" />
-                </Form.Group>
+            <form>
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input class="form-control" value={formData.name} onChange={handleChange} id="name" name="name" type="name" placeholder="Deck Name" />
+                </div>
                 <br />
-                <Form.Group>
-                    <Form.Label>Description</Form.Label>
-                    <Form.Control value={formData.description} onChange={handleChange} name="description" type="description" as="textarea" rows="3" placeholder="Brief description of the deck" />
-                </Form.Group>
+                <div class="form-group">
+                    <label for="decsription">Description</label>
+                    <textarea class="form-control" value={formData.description} onChange={handleChange} name="description" type="description" rows="3" placeholder="Brief description of the deck" />
+                </div>
                 <br />
-                <Button onClick={() => history.push(cancelUrl)} variant="secondary">Cancel</Button>
-                <Button onClick={handleSubmit}>Submit</Button>
-            </Form>
+                <button onClick={() => history.push(cancelUrl)} class="btn btn-secondary">Cancel</button>
+                <button class="btn btn-primary" onClick={handleSubmit}>Submit</button>
+            </form>
         </>  
     );
 }

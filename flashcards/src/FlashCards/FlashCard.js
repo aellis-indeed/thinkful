@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { Card, Button } from "react-bootstrap";
 import { deleteCard } from "../utils/api";
 
 function FlashCard({card, handleCardsChanged}) {
@@ -14,12 +13,13 @@ function FlashCard({card, handleCardsChanged}) {
         history.push(`/decks/${card.deckId}/cards/${card.id}/edit`)
     };
 
-    useEffect(async () => {
+    useEffect(() => {
         if (dlt) {
           setDlt(false);
-          await deleteCard(card.id);
+          deleteCard(card.id).then(console.log);
           handleCardsChanged();
         }
+        // eslint-disable-next-line
       }, [dlt])
     
     const handleDelete = (event) => {
@@ -31,7 +31,7 @@ function FlashCard({card, handleCardsChanged}) {
     }
 
     return (
-        <Card>
+        <div class="card">
             <table>
                 <tbody>
                     <tr>
@@ -41,17 +41,17 @@ function FlashCard({card, handleCardsChanged}) {
                         <td style={style}>
                             {card.back}
                             <br />
-                            <Button onClick={handleDelete} variant="danger" className={"float-right"}>
+                            <button onClick={handleDelete} class="btn btn-danger float-right">
                                 Delete
-                            </Button>
-                            <Button onClick={handleEdit} variant="secondary" className={"float-right"}>
+                            </button>
+                            <button onClick={handleEdit} class="btn btn-secondary float-right">
                                 Edit
-                            </Button>
+                            </button>
                         </td>
                     </tr>
                 </tbody>
             </table>
-        </Card>
+        </div>
     );
 }
 

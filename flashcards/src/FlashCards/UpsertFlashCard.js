@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { Form, Button } from "react-bootstrap";
 import { useRouteMatch, useHistory } from "react-router-dom";
 import { createCard, readDeck, readCard, updateCard } from "../utils/api";
 
@@ -13,7 +12,7 @@ function UpsertFlashCard() {
     let newCard = false;
 
     if (url.includes("new")) {
-        title = ": Add Card";
+        title = "";
         deckId = url.replace("/decks/", "").replace("/cards/new", "");
         newCard = true;
     } else {
@@ -109,29 +108,29 @@ function UpsertFlashCard() {
         history.push(`/decks/${deckId}`);
     }
 
-    const doneButton = (<Button onClick={handleDone} variant="secondary">Done</Button>);;
-    const saveButton = (<Button onClick={handleSave}>Save</Button>);
-    const cancelButton = (<Button onClick={handleCancel} variant="secondary">Cancel</Button>);
-    const submitButton = (<Button onClick={handleSubmit}>Submit</Button>);
+    const doneButton = (<button onClick={handleDone} class="btn btn-secondary">Done</button>);;
+    const saveButton = (<button onClick={handleSave} class="btn btn-primary">Save</button>);
+    const cancelButton = (<button onClick={handleCancel} class="btn btn-secondary">Cancel</button>);
+    const submitButton = (<button onClick={handleSubmit} class="btn btn-primary">Submit</button>);
 
     const buttons = (newCard) ? (<>{doneButton}{saveButton}</>) : (<>{cancelButton}{submitButton}</>)
 
     return (
         <>
             <h1>{(newCard && deck && deck.name) ? deck.name : ""}{title}</h1>
-            <Form>
-                <Form.Group>
-                    <Form.Label>Front</Form.Label>
-                    <Form.Control value={formData.front} onChange={handleChange} name="front" type="text" as="textarea" rows="2" placeholder="Front side of card" />
-                </Form.Group>
+            <form>
+                <div class="form-group">
+                    <label for="front">Front</label>
+                    <textarea value={formData.front} class="form-control" onChange={handleChange} name="front" type="text" id="front" rows="2" placeholder="Front side of card" />
+                </div>
                 <br />
-                <Form.Group>
-                    <Form.Label>Back</Form.Label>
-                    <Form.Control value={formData.back} onChange={handleChange} name="back" type="text" as="textarea" rows="2" placeholder="Back side of card" />
-                </Form.Group>
+                <div class="form-group">
+                    <label for="back">Back</label>
+                    <textarea value={formData.back} class="form-control" onChange={handleChange} name="back" type="text" id="back" rows="2" placeholder="Back side of card" />
+                </div>
                 <br />
                 {buttons}
-            </Form>
+            </form>
         </>  
     );
 }

@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Button, Card } from "react-bootstrap";
 
 function StudyCard({card, index, length, handleNextCard}) {
     const [flipped, setFlipped] = useState(false);
@@ -13,24 +12,24 @@ function StudyCard({card, index, length, handleNextCard}) {
         handleNextCard();
     }
 
-    const flipButton = (<Button onClick={handleFlip} variant="secondary">Flip</Button>);
-    const nextButton = (<Button onClick={handleNext} variant="primary">Next</Button>);
+    const flipButton = (<button onClick={handleFlip} class="btn btn-secondary">Flip</button>);
+    const nextButton = (<button onClick={handleNext} class="btn btn-primary">Next</button>);
 
     const front = card.front;
     const back = card.back;
 
     return (
         <>
-        <Card>
-            <Card.Title>
+        <div class="card">
+            <h5 class="card-title">
                 Card {index + 1} of {length}
-            </Card.Title>
-            <Card.Body>
+            </h5>
+            <p class="card-text">
             {(flipped) ? back : front}
-            </Card.Body>
+            </p>
             {flipButton}
             {(flipped) ? nextButton : <></>}
-        </Card>
+        </div>
         </>
     );
 }
