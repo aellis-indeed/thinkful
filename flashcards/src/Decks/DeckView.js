@@ -16,9 +16,11 @@ function DeckView() {
 
     const handleCardsChanged = () => setCardsChanged(!cardsChanged);
 
-    useEffect(async () => {
-        await readDeck(id)
+    useEffect(() => {
+        const controller = new AbortController();
+        readDeck(id, controller.signal)
             .then(setDeck);
+        return () => controller.abort();
     }, [id, cardsChanged]);
 
     return (

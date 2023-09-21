@@ -9,11 +9,13 @@ function Deck({deck, handleDecksChanged}) {
   const [dlt, setDlt] = useState(false);
 
   useEffect(() => {
+    const controller = new AbortController();
     if (dlt) {
       setDlt(false);
-      deleteDeck(deck.id);
+      deleteDeck(deck.id, controller.signal);
       handleDecksChanged();
     }
+    return () => controller.abort();
   }, [dlt, deck.id, handleDecksChanged])
 
   const handleDelete = (event) => {

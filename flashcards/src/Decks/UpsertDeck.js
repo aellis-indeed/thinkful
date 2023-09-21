@@ -21,8 +21,9 @@ function UpsertDeck() {
     };
 
     useEffect(() => {
+        const controller = new AbortController();
         if (deckId !== -1) {
-            readDeck(id)
+            readDeck(id, controller.signal)
                 .then((res) => {
                     const data = {
                         name: res.name,
@@ -32,8 +33,8 @@ function UpsertDeck() {
                     intialFormData = data;
                     setFormData(data);
                 });
-            
         }
+        return () => controller.abort();
     }, [deckId]);
 
     const [formData, setFormData] = useState(intialFormData);

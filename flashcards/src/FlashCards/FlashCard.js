@@ -14,11 +14,13 @@ function FlashCard({card, handleCardsChanged}) {
     };
 
     useEffect(() => {
+        const controller = new AbortController();
         if (dlt) {
           setDlt(false);
-          deleteCard(card.id).then(console.log);
+          deleteCard(card.id, controller.signal).then(console.log);
           handleCardsChanged();
         }
+        return () => controller.abort();
         // eslint-disable-next-line
       }, [dlt])
     
