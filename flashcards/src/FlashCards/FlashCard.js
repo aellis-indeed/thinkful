@@ -14,15 +14,13 @@ function FlashCard({card, handleCardsChanged}) {
     };
 
     useEffect(() => {
-        const controller = new AbortController();
         if (dlt) {
           setDlt(false);
-          deleteCard(card.id, controller.signal).then(console.log);
-          handleCardsChanged();
+          deleteCard(card.id)
+            .then(() => handleCardsChanged())
+            .catch(console.error);
         }
-        return () => controller.abort();
-        // eslint-disable-next-line
-      }, [dlt])
+      }, [dlt, card.id, handleCardsChanged])
     
     const handleDelete = (event) => {
         event.preventDefault();
@@ -33,7 +31,7 @@ function FlashCard({card, handleCardsChanged}) {
     }
 
     return (
-        <div class="card">
+        <div className="card">
             <table>
                 <tbody>
                     <tr>
@@ -43,10 +41,10 @@ function FlashCard({card, handleCardsChanged}) {
                         <td style={style}>
                             {card.back}
                             <br />
-                            <button onClick={handleDelete} class="btn btn-danger float-right">
+                            <button onClick={handleDelete} className="btn btn-danger float-right">
                                 Delete
                             </button>
-                            <button onClick={handleEdit} class="btn btn-secondary float-right">
+                            <button onClick={handleEdit} className="btn btn-secondary float-right">
                                 Edit
                             </button>
                         </td>

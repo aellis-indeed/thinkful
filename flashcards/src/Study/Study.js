@@ -43,7 +43,7 @@ function Study() {
         <h1>{deck.name}</h1>
         <h2>Not enough cards.</h2>  
         <p>You need at least 3 cards to study. There are {deck.cards.length} cards in this deck.</p>
-        <button class="btn btn-primary" onClick={() => history.push(`/decks/${deck.id}/cards/new`)}>Add Cards</button>
+        <button className="btn btn-primary" onClick={() => history.push(`/decks/${deck.id}/cards/new`)}>Add Cards</button>
       </>
     );
   }

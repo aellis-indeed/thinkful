@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useRouteMatch, useHistory } from "react-router-dom";
 import { createCard, readDeck, readCard, updateCard } from "../utils/api";
 
-function UpsertFlashCard() {
+function UpsertFlashCard({handleCardsChanged}) {
     const history = useHistory();
     const { url } = useRouteMatch();
     const [deck, setDeck] = useState({});
@@ -26,28 +26,28 @@ function UpsertFlashCard() {
         const controller = new AbortController();
         readDeck(deckId, controller.signal)
             .then(setDeck)
-            .catch(console.log);
+            .catch(console.error);
         return () => controller.abort();
     }, [deckId]);
 
     useEffect(() => {
         const controller = new AbortController();
-        if (cardToCreate.keys && cardToCreate.keys.length > 0) {
+        if (Object.keys(cardToCreate).length > 0) {
             createCard(deckId, cardToCreate, controller.signal)
-                .then(console.log);
+                .then(() => handleCardsChanged());
         }
         return () => controller.abort();
-        // eslint-disable-next-line
     }, [cardToCreate]);
 
     useEffect(() => {
         const controller = new AbortController();
-        if (cardToUpdate.keys && cardToUpdate.keys.length > 0) {
+        if (Object.keys(cardToUpdate).length > 0) {
             updateCard(cardToUpdate, controller.signal)
-                .then(console.log);
-            }
+                .then(() => handleCardsChanged());
+            history.push(`/decks/${deckId}`);
+        }
         return () => controller.abort();
-    }, [cardToUpdate]);
+    }, [cardToUpdate, deckId, history]);
 
     let intialFormData = {
         front: "",
@@ -63,11 +63,10 @@ function UpsertFlashCard() {
                         front: res.front,
                         back: res.back
                     };
-                    // eslint-disable-next-line
                     intialFormData = data;
                     setFormData(data)
                 })
-                .catch(console.log);
+                .catch(console.error);
         }
         return () => controller.abort();
     }, [deckId]);
@@ -105,13 +104,12 @@ function UpsertFlashCard() {
             deckId: parseInt(deckId)
         }
         setCardToUpdate(updatedCard);
-        history.push(`/decks/${deckId}`);
     }
 
-    const doneButton = (<button onClick={handleDone} class="btn btn-secondary">Done</button>);;
-    const saveButton = (<button onClick={handleSave} class="btn btn-primary">Save</button>);
-    const cancelButton = (<button onClick={handleCancel} class="btn btn-secondary">Cancel</button>);
-    const submitButton = (<button onClick={handleSubmit} class="btn btn-primary">Submit</button>);
+    const doneButton = (<button onClick={handleDone} className="btn btn-secondary">Done</button>);;
+    const saveButton = (<button onClick={handleSave} className="btn btn-primary">Save</button>);
+    const cancelButton = (<button onClick={handleCancel} className="btn btn-secondary">Cancel</button>);
+    const submitButton = (<button onClick={handleSubmit} className="btn btn-primary">Submit</button>);
 
     const buttons = (newCard) ? (<>{doneButton}{saveButton}</>) : (<>{cancelButton}{submitButton}</>)
 
@@ -119,14 +117,14 @@ function UpsertFlashCard() {
         <>
             <h1>{(newCard && deck && deck.name) ? deck.name : ""}{title}</h1>
             <form>
-                <div class="form-group">
-                    <label for="front">Front</label>
-                    <textarea value={formData.front} class="form-control" onChange={handleChange} name="front" type="text" id="front" rows="2" placeholder="Front side of card" />
+                <div className="form-group">
+                    <label htmlFor="front">Front</label>
+                    <textarea value={formData.front} className="form-control" onChange={handleChange} name="front" type="text" id="front" rows="2" placeholder="Front side of card" />
                 </div>
                 <br />
-                <div class="form-group">
-                    <label for="back">Back</label>
-                    <textarea value={formData.back} class="form-control" onChange={handleChange} name="back" type="text" id="back" rows="2" placeholder="Back side of card" />
+                <div className="form-group">
+                    <label htmlFor="back">Back</label>
+                    <textarea value={formData.back} className="form-control" onChange={handleChange} name="back" type="text" id="back" rows="2" placeholder="Back side of card" />
                 </div>
                 <br />
                 {buttons}

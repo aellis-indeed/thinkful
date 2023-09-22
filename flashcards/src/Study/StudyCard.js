@@ -12,19 +12,19 @@ function StudyCard({card, index, length, handleNextCard}) {
         handleNextCard();
     }
 
-    const flipButton = (<button onClick={handleFlip} class="btn btn-secondary">Flip</button>);
-    const nextButton = (<button onClick={handleNext} class="btn btn-primary">Next</button>);
+    const flipButton = (<button onClick={handleFlip} className="btn btn-secondary">Flip</button>);
+    const nextButton = (<button onClick={handleNext} className="btn btn-primary">Next</button>);
 
     const front = card.front;
     const back = card.back;
 
     return (
         <>
-        <div class="card">
-            <h5 class="card-title">
+        <div className="card">
+            <h5 className="card-title">
                 Card {index + 1} of {length}
             </h5>
-            <p class="card-text">
+            <p className="card-text">
             {(flipped) ? back : front}
             </p>
             {flipButton}

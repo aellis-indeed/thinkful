@@ -7,7 +7,7 @@ function DeckList({decks = [], handleDecksChanged}) {
   const history = useHistory();
   return (
     <>
-      <button class="btn btn-secondary" onClick={() => history.push("/decks/new") }>Create Deck</button>
+      <button className="btn btn-secondary" onClick={() => history.push("/decks/new") }>Create Deck</button>
         {
           decks.map((deck) => {
             return (<Deck key={deck.id} deck={deck} handleDecksChanged={handleDecksChanged} />)

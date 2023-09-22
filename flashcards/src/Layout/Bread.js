@@ -128,18 +128,18 @@ function Bread({decks}) {
         }
     }, [decks, location]);
 
-    const homeCrumb = (<li class="breadcrumb-item">{(!crumbTracker.home.active) ? (<a href="/">Home</a>) : "Home"}</li>);
-    const studyCrumb = (<li class="breadcrumb-item">Study</li>);
-    const createDeckCrumb = (<li class="breadcrumb-item">Create Deck</li>);
-    const deckCrumb = (<li class="breadcrumb-item">{(!crumbTracker.deck.active) ? (<a href={`/decks/${crumbTracker.deck.id}`}>{deckName}</a>) : deckName}</li>);
-    const editDeckCrumb = (<li class="breadcrumb-item">Edit</li>);
-    const addCardCrumb = (<li class="breadcrumb-item" active>Add Card</li>);
-    const editCardCrumb = (<li class="breadcrumb">Edit Card</li>);
+    const homeCrumb = (<li className="breadcrumb-item">{(!crumbTracker.home.active) ? (<a href="/">Home</a>) : "Home"}</li>);
+    const studyCrumb = (<li className="breadcrumb-item">Study</li>);
+    const createDeckCrumb = (<li className="breadcrumb-item">Create Deck</li>);
+    const deckCrumb = (<li className="breadcrumb-item">{(!crumbTracker.deck.active) ? (<a href={`/decks/${crumbTracker.deck.id}`}>{deckName}</a>) : deckName}</li>);
+    const editDeckCrumb = (<li className="breadcrumb-item">Edit</li>);
+    const addCardCrumb = (<li className="breadcrumb-item">Add Card</li>);
+    const editCardCrumb = (<li className="breadcrumb">Edit Card</li>);
 
 
     return (
         <nav>
-          <ol class="breadcrumb">
+          <ol className="breadcrumb">
             {(crumbTracker.home.valid) ? homeCrumb : <></>}
             {(crumbTracker.deck.valid) ? deckCrumb : <></>}
             {(crumbTracker.study.valid) ? studyCrumb : <></>}

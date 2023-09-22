@@ -8,7 +8,7 @@ import UpsertFlashCard from "../FlashCards/UpsertFlashCard";
 import FlashCardList from "../FlashCards/FlashCardList";
 import { readDeck } from "../utils/api";
 
-function DeckView() {
+function DeckView({handleDecksChanged}) {
     const { url } = useRouteMatch();
     const id = url.replace("/decks/", "").replace("/edit", "");
     const [deck, setDeck] = useState({});
@@ -27,10 +27,10 @@ function DeckView() {
         <>
             <Switch>
                 <Route path={`${url}/cards/new`}>
-                    <UpsertFlashCard />
+                    <UpsertFlashCard handleCardsChanged={handleCardsChanged}/>
                 </Route>
                 <Route path={`${url}/cards/:cardId/edit`}>
-                    <UpsertFlashCard />
+                    <UpsertFlashCard handleCardsChanged={handleCardsChanged}/>
                 </Route>
                 <Route path={`${url}/study`}>
                     <Study deck={deck}/>
@@ -39,7 +39,7 @@ function DeckView() {
                     <UpsertDeck />
                 </Route>
                 <Route exact path={url}>
-                    <Deck deck={deck} />
+                    <Deck deck={deck} handleDecksChanged={handleDecksChanged}/>
                     <FlashCardList cards={deck.cards} handleCardsChanged={handleCardsChanged}/>
                 </Route>
             </Switch>

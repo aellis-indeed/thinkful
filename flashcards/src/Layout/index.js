@@ -9,11 +9,13 @@ import DeckView from "../Decks/DeckView";
 
 import { listDecks } from "../utils/api";
 import Bread from "./Bread";
+import { useHistory } from "react-router-dom/cjs/react-router-dom";
 
 
 function Layout() {
   const [decks, setDecks] = useState([]);
   const [decksChanged, setDecksChanged] = useState(false);
+  const history = useHistory();
 
   useEffect(() => {
     const controller = new AbortController();
@@ -23,7 +25,10 @@ function Layout() {
     return () => controller.abort();
   }, [decksChanged]);
 
-  const handleDecksChanged = () => setDecksChanged(!decksChanged);
+  const handleDecksChanged = () => {
+    setDecksChanged(!decksChanged);
+    history.push("/");
+  };
 
   return (
     <div>
@@ -35,7 +40,7 @@ function Layout() {
             <UpsertDeck />
           </Route>
           <Route path={"/decks/:deckId"}>
-            <DeckView decks={decks}/>
+            <DeckView decks={decks} handleDecksChanged={handleDecksChanged}/>
           </Route>
           <Route exact path="/">
             <Home decks={decks} handleDecksChanged={handleDecksChanged} />

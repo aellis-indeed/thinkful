@@ -9,13 +9,11 @@ function Deck({deck, handleDecksChanged}) {
   const [dlt, setDlt] = useState(false);
 
   useEffect(() => {
-    const controller = new AbortController();
     if (dlt) {
       setDlt(false);
-      deleteDeck(deck.id, controller.signal);
-      handleDecksChanged();
+      deleteDeck(deck.id)
+        .then((ignored) => handleDecksChanged());
     }
-    return () => controller.abort();
   }, [dlt, deck.id, handleDecksChanged])
 
   const handleDelete = (event) => {
@@ -29,21 +27,21 @@ function Deck({deck, handleDecksChanged}) {
   let secondaryButton;
 
   if (url.includes("decks")) {
-    secondaryButton = (<button onClick={() => history.push(`/decks/${deck.id}/edit`) } class="btn btn-secondary">Edit</button>)
+    secondaryButton = (<button onClick={() => history.push(`/decks/${deck.id}/edit`) } className="btn btn-secondary">Edit</button>)
   } else {
-    secondaryButton = (<button onClick={() => history.push(`/decks/${deck.id}`) } class="btn btn-secondary">View</button>)
+    secondaryButton = (<button onClick={() => history.push(`/decks/${deck.id}`) } className="btn btn-secondary">View</button>)
   }
 
   return (
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title">{deck.name}</h5>
-          <h6 class="card-subtitle mb-2 text-muted float-right">{(deck.cards) ? deck.cards.length : 0} cards</h6>
-          <p class="card-text">{deck.description}</p>
+      <div className="card">
+        <div className="card-body">
+          <h5 className="card-title">{deck.name}</h5>
+          <h6 className="card-subtitle mb-2 text-muted float-right">{(deck.cards) ? deck.cards.length : 0} cards</h6>
+          <p className="card-text">{deck.description}</p>
           {secondaryButton}
-          <button onClick={() => history.push(`/decks/${deck.id}/study`) } class="btn btn-primary">Study</button>
-          {url.includes("decks") ? (<button onClick={() => history.push(`${url}/cards/new`) } class="btn btn-primary">Add Cards</button>) :<></> }
-          <button onClick={handleDelete} class="btn btn-danger float-right">Delete</button>
+          <button onClick={() => history.push(`/decks/${deck.id}/study`) } className="btn btn-primary">Study</button>
+          {url.includes("decks") ? (<button onClick={() => history.push(`${url}/cards/new`) } className="btn btn-primary">Add Cards</button>) :<></> }
+          <button onClick={handleDelete} className="btn btn-danger float-right">Delete</button>
         </div>
       </div>
   );
